@@ -1,7 +1,7 @@
+import { Application } from "https://deno.land/x/oak/mod.ts";
+
 let message = "Testing Deno...";
 console.log(message);
-
-import { serve } from "https://deno.land/std/http/server.ts";
 
 let textForFile = "This text should be stored in a file using Deno Runtime API";
 let encoder = new TextEncoder();
@@ -12,8 +12,12 @@ console.log("File has been made!");
 
 console.log("Now onto starting a server...");
 
-const server = serve({ port: 3000 });
 console.log("Starting server");
-for await (const req of server) {
-  req.respond({ body: "Hello World\n" });
-}
+
+const app = new Application();
+
+app.use((ctx) => {
+  ctx.response.body = "Hello World!";
+});
+
+await app.listen({ port: 8000 });
