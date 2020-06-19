@@ -11,13 +11,12 @@ let result = await Deno.writeFile("file.txt", data);
 console.log("File has been made!");
 
 console.log("Now onto starting a server...");
-
-console.log("Starting server");
+console.log("Starting server...");
 
 const app = new Application();
 
 app.use((ctx) => {
-  ctx.response.body = "Hello World!";
+  ctx.response.body = "Deno Server Started!";
 });
 
 await app.listen({ port: 8000 });
