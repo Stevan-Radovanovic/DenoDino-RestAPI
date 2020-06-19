@@ -18,6 +18,7 @@ router.post("/dinosaurs", async (ctx) => {
       species: data.value.species,
     },
   );
+
   ctx.response.body = { message: "Added new Dino" };
 });
 
@@ -25,7 +26,7 @@ router.put("/dinosaurs/:dinoId", async (ctx) => {
   const data = await ctx.request.body();
   const did = ctx.params.dinoId;
   const index = dinos.findIndex((dino) => {
-    dino.id === did;
+    return dino.id === did;
   });
   dinos[index] = {
     id: dinos[index].id,
@@ -38,7 +39,7 @@ router.put("/dinosaurs/:dinoId", async (ctx) => {
 router.delete("/dinosaurs/:dinoId", async (ctx) => {
   const did = ctx.params.dinoId;
   dinos = dinos.filter((dino) => {
-    dino.id !== did;
+    return dino.id !== did;
   });
   ctx.response.body = { message: "Deleted a Dino" };
 });
