@@ -1,6 +1,6 @@
 import { Application } from "https://deno.land/x/oak/mod.ts";
 
-import routes from "./routes/routes_dinosaur.ts";
+import dino_routes from "./routes/routes_dinosaur.ts";
 import { connect } from "./database.ts";
 
 const app = new Application();
@@ -16,8 +16,8 @@ app.use(async (ctx, next) => {
   await next();
 });
 
-app.use(routes.routes());
-app.use(routes.allowedMethods());
+app.use(dino_routes.routes());
+app.use(dino_routes.allowedMethods());
 
 console.log("Deno-Dino starting");
 await app.listen({ port: 3000 });
