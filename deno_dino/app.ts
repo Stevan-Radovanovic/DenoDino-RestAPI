@@ -1,6 +1,6 @@
 import { Application } from "https://deno.land/x/oak/mod.ts";
 
-import routes from "./routes.ts";
+import routes from "./routes/routes_dinosaur.ts";
 import { connect } from "./database.ts";
 
 const app = new Application();

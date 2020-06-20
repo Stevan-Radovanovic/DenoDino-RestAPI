@@ -1,6 +1,6 @@
 import { Router } from "https://deno.land/x/oak/mod.ts";
-import { Dinosaur } from "./dinosaur.ts";
-import { getDb } from "./database.ts";
+import { Dinosaur } from "../models/model_dinosaur.ts";
+import { getDb } from "../database.ts";
 import { ObjectId } from "https://deno.land/x/mongo@v0.8.0/mod.ts";
 
 const router = new Router();
