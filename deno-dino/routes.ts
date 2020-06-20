@@ -29,23 +29,19 @@ router.post("/dinosaurs", async (ctx) => {
 
 router.put("/dinosaurs/:dinoId", async (ctx) => {
   const data = await ctx.request.body();
-  const did = ctx.params.dinoId;
-  const index = dinos.findIndex((dino) => {
-    return dino.id === did;
-  });
-  dinos[index] = {
-    id: dinos[index].id,
-    species: dinos[index].species,
-    name: data.value.name,
-  };
-  ctx.response.body = { message: "Updated a Dino" };
+  const did = ctx.params.dinoId!;
+  await getDb().collection("dinosaurs").updateOne(
+    { _id: ObjectId(did) },
+    { $set: { name: data.value.name } },
+  );
+  ctx.response.body = { message: "Updated a Dino's name!" };
 });
 
 router.delete("/dinosaurs/:dinoId", async (ctx) => {
-  const did = ctx.params.dinoId;
-  dinos = dinos.filter((dino) => {
-    return dino.id !== did;
-  });
+  const did = ctx.params.dinoId!;
+  await getDb().collection("dinosaurs").deleteOne(
+    { _id: ObjectId(did) },
+  );
   ctx.response.body = { message: "Deleted a Dino" };
 });
 
