@@ -19,15 +19,12 @@ router.get("/dinosaurs", async (ctx) => {
 
 router.post("/dinosaurs", async (ctx) => {
   const data = await ctx.request.body();
-  dinos.push(
-    {
-      id: new Date().toISOString(),
-      name: data.value.name,
-      species: data.value.species,
-    },
-  );
-
-  ctx.response.body = { message: "Added new Dino" };
+  const dino = {
+    name: data.value.name,
+    species: data.value.species,
+  };
+  await getDb().collection("dinosaurs").insertOne(dino);
+  ctx.response.body = { message: `Added new Dino ${dino.name}` };
 });
 
 router.put("/dinosaurs/:dinoId", async (ctx) => {
