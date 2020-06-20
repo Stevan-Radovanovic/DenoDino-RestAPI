@@ -1,12 +1,20 @@
 import { Router } from "https://deno.land/x/oak/mod.ts";
 import { Dinosaur } from "./dinosaur.ts";
+import { getDb } from "./database.ts";
+import { ObjectId } from "https://deno.land/x/mongo@v0.8.0/mod.ts";
 
 const router = new Router();
 
 let dinos: Dinosaur[] = [];
 
-router.get("/dinosaurs", (ctx) => {
-  ctx.response.body = { dinoArray: dinos };
+router.get("/dinosaurs", async (ctx) => {
+  const dinosaurs = await getDb().collection("dinosaurs").find();
+  const mappedDinosaurs = dinosaurs.map(
+    (dino: { _id: ObjectId; name: string; species: string }) => {
+      return { id: dino._id.$oid, name: dino.name, species: dino.species };
+    },
+  );
+  ctx.response.body = { dinoArray: mappedDinosaurs };
 });
 
 router.post("/dinosaurs", async (ctx) => {
